@@ -28,7 +28,11 @@ public class PlayerController : MonoBehaviour
         transform.Translate(AxisMx * currentSpeed * dt, 0.0f, AxisMy * currentSpeed * dt);
         dash();
 
-        //on jump fire jump
+        //on jump input jump
+        if (Input.GetButtonDown("Jump"))
+        {
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+        }
         
 
 
@@ -37,7 +41,7 @@ public class PlayerController : MonoBehaviour
     }
     void dash()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Dash"))
         {
             GetComponent<Rigidbody>().AddForce(dashForce, ForceMode.Impulse);
         }
