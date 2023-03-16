@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float currentSpeed = 0.0f;
     public float maxSpeed = 10.0f;
     public float acceleration = 1.0f;
+    private Vector3 dashForce = new Vector3(0, 0, 7);
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +26,20 @@ public class PlayerController : MonoBehaviour
         currentSpeed += acceleration * dt;
         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
         transform.Translate(AxisMx * currentSpeed * dt, 0.0f, AxisMy * currentSpeed * dt);
+        dash();
 
+        //on jump fire jump
+        
 
 
 
         
+    }
+    void dash()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GetComponent<Rigidbody>().AddForce(dashForce, ForceMode.Impulse);
+        }
     }
 }
