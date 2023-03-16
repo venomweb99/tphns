@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float currentSpeed = 0.0f;
     public float maxSpeed = 10.0f;
     public float acceleration = 1.0f;
-    private Vector3 dashForce = new Vector3(0, 0, 7);
+    public float dashForce = 20.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +41,23 @@ public class PlayerController : MonoBehaviour
     }
     void dash()
     {
+        float AxisMx = Input.GetAxis("Horizontal");
+        float AxisMy = Input.GetAxis("Vertical");
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+
+        cameraForward.y = 0.0f;
+        cameraRight.y = 0.0f;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        Vector3 inputDirection = cameraForward * AxisMy + cameraRight * AxisMx;
+        inputDirection.Normalize();
+
         if (Input.GetButtonDown("Dash"))
         {
-            GetComponent<Rigidbody>().AddForce(dashForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(inputDirection * dashForce, ForceMode.Impulse);
         }
     }
 }

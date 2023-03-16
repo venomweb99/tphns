@@ -62,15 +62,10 @@ public class CameraController : MonoBehaviour
         
         
 
-        //look at the player but just vertically
-        Vector3 playerPosVertical = new Vector3(0, playerPos.y, 0);
+        //look at the player
+        transform.LookAt(playerPos);
         
-        //set the camera y rotation to look at the player
-        Vector3 cameraPosVertical = new Vector3(0, cameraPos.y, 0);
-        Vector3 cameraToPlayerVertical = playerPosVertical - cameraPosVertical;
-        cameraToPlayerVertical.Normalize();
-        float cameraToPlayerVerticalAngle = Mathf.Atan2(cameraToPlayerVertical.x, cameraToPlayerVertical.z) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0.0f, cameraToPlayerVerticalAngle, 0.0f);
+
         
 
 
