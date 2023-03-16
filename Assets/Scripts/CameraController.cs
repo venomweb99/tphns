@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float cameraDistance = 5.0f;
+    public float cameraDistance = 10.0f;
+    public float groundDistance = 5.0f;
     public float cameraCurrentSpeed = 0.0f;
     public float cameraMaxSpeed = 10.0f;
     public float cameraAcceleration = 2.0f;
@@ -29,8 +30,8 @@ public class CameraController : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
             //set the camera height to the ground height + camera distance unless the player is distance away from the camera
-            float cameraHeight = hit.point.y + cameraDistance;
-            if (playerPos.y > cameraHeight + cameraDistance)
+            float cameraHeight = hit.point.y + groundDistance;
+            if (playerPos.y > cameraHeight + groundDistance)
             {
                 cameraHeight = playerPos.y;
             }
@@ -61,10 +62,22 @@ public class CameraController : MonoBehaviour
         
         
 
-        //rotate the camera vertically to look at the player
-        Vector3 cameraToLookAtPlayer = playerPos - cameraPos;
-        float angle = Mathf.Atan2(cameraToLookAtPlayer.x, cameraToLookAtPlayer.z) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+        //look at the player but just vertically
+        Vector3 playerPosVertical = new Vector3(0, playerPos.y, 0);
+        
+        //set the camera y rotation to look at the player
+        Vector3 cameraPosVertical = new Vector3(0, cameraPos.y, 0);
+        Vector3 cameraToPlayerVertical = playerPosVertical - cameraPosVertical;
+        cameraToPlayerVertical.Normalize();
+        float cameraToPlayerVerticalAngle = Mathf.Atan2(cameraToPlayerVertical.x, cameraToPlayerVertical.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0.0f, cameraToPlayerVerticalAngle, 0.0f);
+        
+
+
+        
+        
+
+        
 
         
 
