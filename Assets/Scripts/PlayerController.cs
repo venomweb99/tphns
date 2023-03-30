@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float acceleration = 1.0f;
     public float dashForce = 20.0f;
+    public float jumpForce = 15.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
         //on jump input jump
         if (Input.GetButtonDown("Jump"))
         {
-            GetComponent<Rigidbody>().AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
         }
         
 
