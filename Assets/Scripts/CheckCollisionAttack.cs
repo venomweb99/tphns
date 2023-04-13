@@ -5,6 +5,9 @@ using UnityEngine;
 public class CheckCollisionAttack : MonoBehaviour
 {
     public bool isColliding = false;
+    public Material DebugRed;
+    public Material DebugBlue;
+
     public GameObject enemy;
     // Start is called before the first frame update
     void Start()
