@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
     public float currentSpeed = 0.0f;
     public float maxSpeed = 10.0f;
     public float acceleration = 1.0f;
     public float dashForce = 20.0f;
+
+    public GameObject attackHitbox;
+
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +39,13 @@ public class PlayerController : MonoBehaviour
         {
             GetComponent<Rigidbody>().AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
         }
-        
 
 
+        basicAttack();
 
-        
+
     }
+    #region
     void dash()
     {
         float AxisMx = Input.GetAxis("Horizontal");
@@ -60,4 +67,28 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(inputDirection * dashForce, ForceMode.Impulse);
         }
     }
+    
+    void basicAttack()
+    {
+        //check if BasicAttack is being pressed
+        if (Input.GetButtonDown("BasicAttack"))
+        {
+            Debug.Log("BasicAttack");
+            //check if the attack hitbox is colliding with an enemy
+            if (attackHitbox.GetComponent<CheckCollisionAttack>().isColliding)
+            {
+                //if it is, deal damage to the enemy
+                attackHitbox.GetComponent<CheckCollisionAttack>().enemy.GetComponent<Rigidbody>().AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+                //set the material of attackHitbox to debugRed
+                attackHitbox.GetComponent<Renderer>().material = Resources.Load("Assets/Materials/Debug Red", typeof(Material)) as Material;
+         
+            }
+            
+
+        }
+
+
+    }
+    #endregion
 }
+   
