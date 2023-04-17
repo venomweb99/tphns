@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10.0f;
 
     public float dashCD = 3.0f;
-    private float dashTimer = 0.0f;
+    public float dashTimer = 0.0f;
     public float attackCD = 1.0f;
-    private float attackTimer = 0.0f;
+    public float attackTimer = 0.0f;
     public bool isAirborne = false;
 
 
@@ -74,8 +74,9 @@ public class PlayerController : MonoBehaviour
         {
             GetComponent<Rigidbody>().AddForce(transform.forward * AxisMy * dashForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(transform.right * AxisMx * dashForce, ForceMode.Impulse);
+            dashTimer = 0;
         }
-        dashTimer = 0;
+        
     }
     
     void basicAttack()
