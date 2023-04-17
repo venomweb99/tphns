@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
         }
 
+        updateTimers();
         if(dashTimer > dashCD) dash();
         if(attackTimer > attackCD) basicAttack();
         debugTests();
