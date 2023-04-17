@@ -665,6 +665,11 @@ MonoBehaviour:
   pushForce: 5
   pushUpForce: 5
   jumpForce: 10
+  dashCD: 1
+  dashTimer: 0
+  attackCD: 1
+  attackTimer: 0
+  isAirborne: 0
   attackHitbox: {fileID: 1966334529}
 --- !u!1 &1285551163
 GameObject:

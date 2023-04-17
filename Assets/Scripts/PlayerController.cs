@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public float attackTimer = 0.0f;
     public bool isAirborne = false;
 
+    private float compensationAngle = 45.0f;
+
 
     public GameObject attackHitbox;
 
@@ -70,10 +72,23 @@ public class PlayerController : MonoBehaviour
         float AxisMx = Input.GetAxis("Horizontal");
         float AxisMy = Input.GetAxis("Vertical");
 
+        float angleToFix = compensationAngle * AxisMx;
+        Vector3 newRight = Quaternion.AngleAxis(angleToFix, Vector3.up) * transform.right;
+
+        float isRight = 0;
+        float margin = 0.1f;
+        if(AxisMx > margin) isRight = 1;
+        if(AxisMx < -margin) isRight = -1;
+
+        float isFwd = 0;
+        if(AxisMy > margin) isFwd = 1;
+        if(AxisMy < -margin) isFwd = -1;
+
+
         if (Input.GetButtonDown("Dash"))
         {
-            GetComponent<Rigidbody>().AddForce(transform.forward * AxisMy * dashForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(transform.right * AxisMx * dashForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.forward * isFwd * dashForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(newRight * isRight * dashForce, ForceMode.Impulse);
             dashTimer = 0;
         }
         
