@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
 
         basicAttack();
-
+        debugTests();
 
     }
     #region
@@ -53,21 +53,11 @@ public class PlayerController : MonoBehaviour
     {
         float AxisMx = Input.GetAxis("Horizontal");
         float AxisMy = Input.GetAxis("Vertical");
-        Vector3 cameraForward = Camera.main.transform.forward;
-        Vector3 cameraRight = Camera.main.transform.right;
-
-        cameraForward.y = 0.0f;
-        cameraRight.y = 0.0f;
-
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        Vector3 inputDirection = cameraForward * AxisMy + cameraRight * AxisMx;
-        inputDirection.Normalize();
 
         if (Input.GetButtonDown("Dash"))
         {
-            GetComponent<Rigidbody>().AddForce(inputDirection * dashForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.forward * AxisMy * dashForce, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.right * AxisMx * dashForce, ForceMode.Impulse);
         }
     }
     
@@ -92,6 +82,13 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    }
+
+    void debugTests(){
+        //raycast to transform forward in red
+        Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
+        //raycast to transform right in green
+        Debug.DrawRay(transform.position, transform.right * 10, Color.green);
     }
     #endregion
 }
