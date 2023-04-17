@@ -14,6 +14,13 @@ public class PlayerController : MonoBehaviour
     public float pushUpForce = 20.0f;
     public float jumpForce = 10.0f;
 
+    public float dashCD = 3.0f;
+    private float dashTimer = 0.0f;
+    public float attackCD = 1.0f;
+    private float attackTimer = 0.0f;
+    public bool isAirborne = false;
+
+
     public GameObject attackHitbox;
 
     #endregion
@@ -35,20 +42,28 @@ public class PlayerController : MonoBehaviour
         currentSpeed += acceleration * dt;
         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
         transform.Translate(AxisMx * currentSpeed * dt, 0.0f, AxisMy * currentSpeed * dt);
-        dash();
+        
+        
 
         //on jump input jump
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !isAirborne)
         {
+            isAirborne = true;
             GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
         }
 
-
-        basicAttack();
+        if(dashTimer > dashCD) dash();
+        if(attackTimer > attackCD) basicAttack();
         debugTests();
 
     }
     #region
+
+    void updateTimers(){
+        dashTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
+    }
+    
     void dash()
     {
         float AxisMx = Input.GetAxis("Horizontal");
@@ -59,6 +74,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(transform.forward * AxisMy * dashForce, ForceMode.Impulse);
             GetComponent<Rigidbody>().AddForce(transform.right * AxisMx * dashForce, ForceMode.Impulse);
         }
+        dashTimer = 0;
     }
     
     void basicAttack()
@@ -84,11 +100,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void groundCheck()
+    {
+        //raycast to see if distance to ground is less than 1
+        if (Physics.Raycast(transform.position, -transform.up, 0.2f))
+        {
+            isAirborne = false;
+        }
+    }
+
     void debugTests(){
         //raycast to transform forward in red
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
         //raycast to transform right in green
         Debug.DrawRay(transform.position, transform.right * 10, Color.green);
+        //raycast to transform down in blue
+        Debug.DrawRay(transform.position, -transform.up * 10, Color.blue);
     }
     #endregion
 }
