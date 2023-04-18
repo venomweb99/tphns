@@ -669,9 +669,9 @@ MonoBehaviour:
   dashTimer: 0
   attackCD: 1
   attackTimer: 0
-  isAirborne: 0
   attackHitbox: {fileID: 1966334529}
-  attacking: 0
+  isAttacking: 0
+  isAirborne: 0
 --- !u!1 &1285551163
 GameObject:
   m_ObjectHideFlags: 0
