@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
 
     public GameObject attackHitbox;
-
+    public bool attacking = false;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         debugTests();
 
     }
-    #region
+    #region METHODS
 
     void updateTimers(){
         dashTimer += Time.deltaTime;
@@ -99,19 +99,12 @@ public class PlayerController : MonoBehaviour
         //check if BasicAttack is being pressed
         if (Input.GetButtonDown("BasicAttack"))
         {
-            Debug.Log("BasicAttack");
-            //check if the attack hitbox is colliding with an enemy
-            if (attackHitbox.GetComponent<CheckCollisionAttack>().isColliding)
-            {
-                //if it is, push the enemy away
-                attackHitbox.GetComponent<CheckCollisionAttack>().enemy.GetComponent<Rigidbody>().AddForce(transform.forward * pushForce, ForceMode.Impulse);
-                attackHitbox.GetComponent<CheckCollisionAttack>().enemy.GetComponent<Rigidbody>().AddForce(transform.up * pushUpForce, ForceMode.Impulse);
-                //set the material of attackHitbox to DebugRed
-                attackHitbox.GetComponent<Renderer>().material = attackHitbox.GetComponent<CheckCollisionAttack>().DebugRed;
-         
-            }
-            
-
+            attacking = true;
+        }
+        //Once you realease the button, cannot attack anymore unitl being pressed again
+        if (Input.GetButtonUp("BasicAttack"))
+        {
+            attacking = false;
         }
 
 
