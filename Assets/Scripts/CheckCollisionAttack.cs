@@ -25,7 +25,7 @@ public class CheckCollisionAttack : MonoBehaviour
     private void OnTriggerStay(Collider collision)
     {
         //if the trigger hitbox is triggering an enemy at the same time press attack, allows to attack
-        if (collision.gameObject.tag == "Enemy" && player.GetComponent<PlayerController>().attacking)
+        if (collision.gameObject.tag == "Enemy" && player.GetComponent<PlayerController>().isAttacking)
         { 
             collision.GetComponent<GetAttacked>().isAttacked = true;
         }

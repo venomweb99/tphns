@@ -13,18 +13,18 @@ public class PlayerController : MonoBehaviour
     public float pushForce = 20.0f;
     public float pushUpForce = 20.0f;
     public float jumpForce = 10.0f;
-
     public float dashCD = 3.0f;
     public float dashTimer = 0.0f;
     public float attackCD = 1.0f;
     public float attackTimer = 0.0f;
-    public bool isAirborne = false;
+    
 
     private float compensationAngle = 45.0f;
 
 
     public GameObject attackHitbox;
-    public bool attacking = false;
+    public bool isAttacking = false;
+    public bool isAirborne = false;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -100,12 +100,12 @@ public class PlayerController : MonoBehaviour
         //check if BasicAttack is being pressed
         if (Input.GetButtonDown("BasicAttack"))
         {
-            attacking = true;
+            isAttacking = true;
         }
         //Once you realease the button, cannot attack anymore unitl being pressed again
         if (Input.GetButtonUp("BasicAttack"))
         {
-            attacking = false;
+            isAttacking = false;
         }
 
 
