@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
         }
 
         updateTimers();
+        groundCheck();
         if(dashTimer > dashCD) dash();
         if(attackTimer > attackCD) basicAttack();
         debugTests();
@@ -113,20 +114,12 @@ public class PlayerController : MonoBehaviour
     void groundCheck()
     {
         //check if the object below self is tagged ground
-        RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(transform.position-new Vector3(0,1.05f,0), -transform.up, out hit, 0.3f))
+        if (Physics.Raycast(transform.position-new Vector3(0,1.05f,0), -transform.up, 0.3f))
         {
-            if (hit.collider.gameObject.tag == "Ground")
-            {
+            Debug.Log("Grounded");
                 isAirborne = false;
-            }
         }
 
-
-
-
-
-        
     }
 
     void debugTests(){
