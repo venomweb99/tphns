@@ -112,11 +112,21 @@ public class PlayerController : MonoBehaviour
 
     void groundCheck()
     {
-        //raycast to see if distance to ground is less than 1
-        if (Physics.Raycast(transform.position, -transform.up, 0.2f))
+        //check if the object below self is tagged ground
+        RaycastHit hit = new RaycastHit();
+        if (Physics.Raycast(transform.position-new Vector3(0,1.05f,0), -transform.up, out hit, 0.3f))
         {
-            isAirborne = false;
+            if (hit.collider.gameObject.tag == "Ground")
+            {
+                isAirborne = false;
+            }
         }
+
+
+
+
+
+        
     }
 
     void debugTests(){
@@ -125,7 +135,7 @@ public class PlayerController : MonoBehaviour
         //raycast to transform right in green
         Debug.DrawRay(transform.position, transform.right * 10, Color.green);
         //raycast to transform down in blue
-        Debug.DrawRay(transform.position, -transform.up * 10, Color.blue);
+        Debug.DrawRay(transform.position-new Vector3(0,1.05f,0), -transform.up * 0.3f, Color.blue);
     }
     #endregion
 }
