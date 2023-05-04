@@ -17,9 +17,12 @@ public class PlayerController : MonoBehaviour
     public float dashTimer = 0.0f;
     public float attackCD = 1.0f;
     public float attackTimer = 0.0f;
-    
 
+    
+    private Vector3 lastdir = Vector3.zero;
     private float compensationAngle = 45.0f;
+    private float AxisMx;
+    private float AxisMy;
 
 
     public GameObject attackHitbox;
@@ -36,10 +39,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float dt = Time.deltaTime;
-        //read input from axis
-        float AxisMx = Input.GetAxis("Horizontal");
-        float AxisMy = Input.GetAxis("Vertical");
-
+        AxisMy = Input.GetAxis("Vertical");
+        AxisMx = Input.GetAxis("Horizontal");
+        
         //move the player accelerating it exponentially
         currentSpeed += acceleration * dt;
         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
@@ -68,10 +70,15 @@ public class PlayerController : MonoBehaviour
         attackTimer += Time.deltaTime;
     }
     
+    void setlastdir(){
+        float margin = 0.1f;
+        if(AxisMx > margin) lastdir = transform.right;
+        if(AxisMx < -margin) lastdir = -transform.right;
+        if(AxisMy > margin) lastdir = transform.forward;
+        if(AxisMy < -margin) lastdir = -transform.forward;
+    }
     void dash()
     {
-        float AxisMx = Input.GetAxis("Horizontal");
-        float AxisMy = Input.GetAxis("Vertical");
 
         float angleToFix = compensationAngle * AxisMx;
         Vector3 newRight = Quaternion.AngleAxis(angleToFix, Vector3.up) * transform.right;
@@ -88,8 +95,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Dash"))
         {
-            GetComponent<Rigidbody>().AddForce(transform.forward * isFwd * dashForce, ForceMode.Impulse);
-            GetComponent<Rigidbody>().AddForce(newRight * isRight * dashForce, ForceMode.Impulse);
+            if(AxisMx > margin || AxisMx < -margin || AxisMy > margin || AxisMy < -margin){
+                GetComponent<Rigidbody>().AddForce(transform.forward * isFwd * dashForce, ForceMode.Impulse);
+                GetComponent<Rigidbody>().AddForce(newRight * isRight * dashForce, ForceMode.Impulse);
+            }
+            else{
+                GetComponent<Rigidbody>().AddForce(lastdir * dashForce, ForceMode.Impulse);
+            }
+            
             dashTimer = 0;
         }
         
