@@ -6,6 +6,8 @@ public class GetAttacked : MonoBehaviour
 {
 
     public bool isAttacked = false;
+    [SerializeField]
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +25,10 @@ public class GetAttacked : MonoBehaviour
     
     //if the code allows the action, it generates a force that pushes enemy back
     private void attacksItself()
-    {
+    {    
         if (isAttacked)
         {
-            GetComponent<Rigidbody>().AddForce(transform.forward * 1f, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(player.transform.forward * 1f, ForceMode.Impulse);
         }
     }
     #endregion
