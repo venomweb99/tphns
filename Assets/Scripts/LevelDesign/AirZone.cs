@@ -22,7 +22,7 @@ public class AirZone : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "player") {
+        if (other.tag == "Player") {
             distance = (transform.position - other.transform.position).magnitude;
             other.GetComponent<Rigidbody>().AddForce(Vector3.up * (1/distance)*airForce, ForceMode.Acceleration);
             Debug.Log("funciona");
