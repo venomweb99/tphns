@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ed4d5837d32369a4490667b4a0de20f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacked: 0
-  player: {fileID: 0}
+  player: {fileID: 55989508053622214, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
 --- !u!114 &732538657385362396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,4 +149,4 @@ MonoBehaviour:
   - {fileID: 0}
   speed: 3
   waypointIndex: 1
-  player: {fileID: 0}
+  player: {fileID: 55989508053622214, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
