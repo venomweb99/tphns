@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class GetAttacked : MonoBehaviour
 {
-
     public bool isAttacked = false;
     [SerializeField]
     private GameObject player;
+    private Transform childTransform;
     // Start is called before the first frame update
     void Start()
     {
-        
+        childTransform = player.transform.GetChild(0);
     }
 
     // Update is called once per frame
@@ -28,7 +28,8 @@ public class GetAttacked : MonoBehaviour
     {    
         if (isAttacked)
         {
-            GetComponent<Rigidbody>().AddForce(player.transform.forward * 1f, ForceMode.Impulse);
+            
+            GetComponent<Rigidbody>().AddForce(childTransform.transform.forward * 1f, ForceMode.Impulse);
         }
     }
     #endregion
