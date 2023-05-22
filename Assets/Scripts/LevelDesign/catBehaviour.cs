@@ -5,7 +5,7 @@ using UnityEngine;
 public class catBehaviour : MonoBehaviour
 {
     #region variables
-    [SerializeField] public GameObject projectile;
+    [SerializeField] public GameObject Projectile;
     public GameObject player;
 
 
@@ -32,7 +32,7 @@ public class catBehaviour : MonoBehaviour
 
     private void Attack()
     {
-        Projectile project = Instantiate(projectile, transform);
-        project.transform.position = transform.position;
+        //Projectile project = Instantiate(Projectile, transform);
+        //project.transform.position = transform.position;
     }
 }*/
