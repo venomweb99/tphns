@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,4 +35,4 @@ public class catBehaviour : MonoBehaviour
         Projectile project = Instantiate(projectile, transform);
         project.transform.position = transform.position;
     }
-}
+}*/

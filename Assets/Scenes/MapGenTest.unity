@@ -434,8 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57833e28f2a1e245be022ef4160b291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDistance: 6
-  groundDistance: 8
+  cameraDistance: 8
+  groundDistance: 4
   cameraCurrentSpeed: 0
   cameraMaxSpeed: 15
   cameraAcceleration: 4
