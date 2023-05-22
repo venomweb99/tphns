@@ -52,7 +52,13 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            cameraCurrentSpeed = 0.0f;
+            //if the camera is too close it should go back
+            cameraCurrentSpeed = Mathf.Max(cameraCurrentSpeed + cameraAcceleration * 2 * dt, 0.0f);
+            cameraToPlayer.Normalize();
+            cameraToPlayer *= cameraCurrentSpeed * dt;
+            cameraPos -= cameraToPlayer;
+            
+
         }
 
         //set the camera position
