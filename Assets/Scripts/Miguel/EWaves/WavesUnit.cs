@@ -26,7 +26,7 @@ public class WavesUnit : MonoBehaviour
         myTransform = transform;
     }
 
-    public void AssignFlock(Waves flock)
+    public void AssignWave(Waves flock)
     {
         assignedFlock = flock;
     }

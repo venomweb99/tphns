@@ -6,8 +6,8 @@ using UnityEngine;
 public class Waves : MonoBehaviour
 {
     [Header("Spawn Setup")]
-    [SerializeField] public WavesUnit flockUnitPrefab;
-    [SerializeField] private int flockSize;
+    [SerializeField] public WavesUnit waveUnitPrefab;
+    [SerializeField] private int waveSize;
     [SerializeField] private Vector3 spawnBounds;
 
     [Header("Speed Setup")]
@@ -81,15 +81,15 @@ public class Waves : MonoBehaviour
 
     private void GenerateUnits()
     {
-        allUnits = new WavesUnit[flockSize];
-        for (int i = 0; i < flockSize; i++)
+        allUnits = new WavesUnit[waveSize];
+        for (int i = 0; i < waveSize; i++)
         {
             var randomVector = UnityEngine.Random.insideUnitSphere;
             randomVector = new Vector3(randomVector.x * spawnBounds.x, 1, randomVector.z * spawnBounds.z);
             var spawnPosition = transform.position + randomVector;
             var rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
-            allUnits[i] = Instantiate(flockUnitPrefab, spawnPosition, rotation);
-            allUnits[i].AssignFlock(this);
+            allUnits[i] = Instantiate(waveUnitPrefab, spawnPosition, rotation);
+            allUnits[i].AssignWave(this);
             allUnits[i].InitializeSpeed(UnityEngine.Random.Range(minSpeed, maxSpeed));
         }
     }
