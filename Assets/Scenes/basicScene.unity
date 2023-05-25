@@ -918,6 +918,10 @@ MonoBehaviour:
   dashTimer: 0
   attackCD: 1
   attackTimer: 0
+  bullets: []
+  bullet: {fileID: 4037576893478142236, guid: 4f62e0898e3145a4ba95033fe0c4446a, type: 3}
+  m_instancePoint: {fileID: 594606583}
+  activeBullets: []
   attackHitbox: {fileID: 1966334529}
   isAttacking: 0
   isAirborne: 0
@@ -1600,8 +1604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c0d38784ce77149a7e3dcd390602fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  player: {fileID: 4037576893478142236, guid: 4f62e0898e3145a4ba95033fe0c4446a, type: 3}
 --- !u!4 &2049180937
 Transform:
   m_ObjectHideFlags: 0

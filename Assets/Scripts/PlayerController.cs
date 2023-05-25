@@ -23,16 +23,30 @@ public class PlayerController : MonoBehaviour
     private float compensationAngle = 45.0f;
     private float AxisMx;
     private float AxisMy;
-
-
+   
+    #region Pooling
+    public List<GameObject> bullets;
+    public GameObject bullet;
+    public Transform m_instancePoint;
+    public List<GameObject> activeBullets;
+    #endregion
+    #region Attack
     public GameObject attackHitbox;
     public bool isAttacking = false;
     public bool isAirborne = false;
     #endregion
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
-        
+        bullets = new List<GameObject>();
+        for(int i = 0;i< 20; i++)
+        {
+            GameObject obj = (GameObject)Instantiate(bullet);
+            obj.SetActive(false);
+            bullets.Add(obj);
+        }
+        activeBullets = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -62,6 +76,7 @@ public class PlayerController : MonoBehaviour
         if(attackTimer > attackCD) basicAttack();
         debugTests();
 
+        Shoot();
     }
     #region METHODS
 
@@ -107,7 +122,22 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-    
+    void Shoot()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            for(int i = 0; i < bullets.Count; i++)
+            {
+                if (!bullets[i].activeInHierarchy)
+                {
+                    bullets[i].transform.position = new Vector3(m_instancePoint.position.x, m_instancePoint.position.y + 1.0f, m_instancePoint.position.z);
+                   // bullets[i].transform.position.y = m_instancePoint.position.y + 10.0f; 
+                    bullets[i].transform.rotation = Quaternion.identity;
+                    bullets[i].SetActive(true);
+                }
+            }
+        }
+    }
     void basicAttack()
     {
         //check if BasicAttack is being pressed
