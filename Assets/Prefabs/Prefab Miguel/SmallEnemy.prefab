@@ -196,12 +196,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8e33f4d78768145aec68ecffda8b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FOVAngle: 1
+  fOVAngle: 0
   smoothDamp: 1
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
-  directionsToCheckWhenAvoidingObstacles: []
+    m_Bits: 512
+  directionsToCheckWhenAvoidingObstacles:
+  - {x: 1, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: -1, z: 0}
+  agent: {fileID: 0}
+  goalDistance: 10
 --- !u!54 &7928889397165688609
 Rigidbody:
   m_ObjectHideFlags: 0

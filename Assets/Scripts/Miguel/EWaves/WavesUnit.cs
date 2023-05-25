@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WavesUnit : MonoBehaviour
 {
@@ -18,6 +19,14 @@ public class WavesUnit : MonoBehaviour
     private Vector3 currentVelocity;
     private Vector3 currentObstacleAvoidanceVector;
     private float speed;
+    /*
+    public NavMeshAgent agent;
+    public float goalDistance = 10f;
+    private void Start()
+    {
+        Vector3 target = transform.position + Vector3.forward;
+        agent.SetDestination(target);
+    }*/
 
     public Transform myTransform { get; set; }
     public float FOVAngle { get => fOVAngle; set => fOVAngle = value; }
@@ -53,6 +62,7 @@ public class WavesUnit : MonoBehaviour
 
         var moveVector = cohesionVector + avoidanceVector + aligementVector + boundsVector + obstacleVector;
         moveVector = Vector3.SmoothDamp(myTransform.forward, moveVector, ref currentVelocity, smoothDamp);
+        
         moveVector = moveVector.normalized * speed;
         if (moveVector == Vector3.zero)
             moveVector = transform.forward;
