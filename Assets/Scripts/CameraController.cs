@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     public float cameraAcceleration = 2.0f;
     public float cameraTargetAcceleration = 2.0f;
     public GameObject player;
+    private float deadzone = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,13 +45,13 @@ public class CameraController : MonoBehaviour
         cameraCurrentSpeed = Mathf.Min(cameraCurrentSpeed + cameraAcceleration * dt, cameraMaxSpeed);
         Vector3 cameraToPlayer = playerPos - cameraPos;
         float cameraToPlayerLength = cameraToPlayer.magnitude;
-        if (cameraToPlayerLength > cameraDistance)
+        if (cameraToPlayerLength > cameraDistance + deadzone)
         {
             cameraToPlayer.Normalize();
             cameraToPlayer *= cameraCurrentSpeed * dt;
             cameraPos += cameraToPlayer;
         }
-        else
+        if (cameraToPlayerLength < cameraDistance - deadzone)
         {
             //if the camera is too close it should go back
             cameraCurrentSpeed = Mathf.Max(cameraCurrentSpeed + cameraAcceleration * 2 * dt, 0.0f);

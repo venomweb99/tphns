@@ -253,6 +253,10 @@ MonoBehaviour:
   dashTimer: 0
   attackCD: 1
   attackTimer: 0
+  bullets: []
+  bullet: {fileID: 4037576893478142236, guid: 4f62e0898e3145a4ba95033fe0c4446a, type: 3}
+  m_instancePoint: {fileID: 55989508053622234}
+  activeBullets: []
   attackHitbox: {fileID: 8851053572092216793}
   isAttacking: 0
   isAirborne: 0

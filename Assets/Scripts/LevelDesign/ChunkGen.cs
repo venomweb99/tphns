@@ -12,6 +12,7 @@ public class ChunkGen : MonoBehaviour
     public GameObject prefab4;
     public GameObject prefab5;
     public GameObject[] prefabs;
+    public GameObject Player;
     public int[] seed;
 
     public float prefab1size;
@@ -42,7 +43,22 @@ public class ChunkGen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //if the player is far from a chunk, deactivate it
+        for (int i = 0; i < prefabs.Length; i++)
+        {
+            if (prefabs[i].transform.position.z < Player.transform.position.z - RenderDistance)
+            {
+                prefabs[i].SetActive(false);
+            }
+        }
+        //if the player is close to a chunk, activate it
+        for (int i = 0; i < prefabs.Length; i++)
+        {
+            if (prefabs[i].transform.position.z > Player.transform.position.z - RenderDistance && prefabs[i].transform.position.z < Player.transform.position.z + RenderDistance)
+            {
+                prefabs[i].SetActive(true);
+            }
+        }
         
     
     }
