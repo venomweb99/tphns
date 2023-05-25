@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 732538657385362338}
   - component: {fileID: 732538657385362399}
   - component: {fileID: 732538657385362396}
+  - component: {fileID: 5696984704364046430}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttacked: 0
   player: {fileID: 55989508053622214, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+  force: 10
 --- !u!114 &732538657385362396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,3 +152,30 @@ MonoBehaviour:
   speed: 3
   waypointIndex: 1
   player: {fileID: 55989508053622214, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+--- !u!114 &5696984704364046430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732538657385362341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4d6d0866780a5498b4b39c8e5e0eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveUnitPrefab: {fileID: 2922623976577616619, guid: 3cbe2e199793bc34780af8d7c114e978, type: 3}
+  waveSize: 5
+  spawnBounds: {x: 1, y: 1, z: 51}
+  _minSpeed: 1.2
+  _maxSpeed: 0
+  _cohesionDistance: 5
+  _avoidanceDistance: 1
+  _aligementDistance: 5
+  _obstacleDistance: 1
+  _boundsDistance: 20
+  _cohesionWeight: 7
+  _avoidanceWeight: 10
+  _aligementWeight: 0
+  _boundsWeight: 1
+  _obstacleWeight: 20

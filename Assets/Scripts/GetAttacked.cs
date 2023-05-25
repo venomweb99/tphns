@@ -8,6 +8,7 @@ public class GetAttacked : MonoBehaviour
     [SerializeField]
     private GameObject player;
     private Transform childTransform;
+    public float force = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,7 @@ public class GetAttacked : MonoBehaviour
         if (isAttacked)
         {
             
-            GetComponent<Rigidbody>().AddForce(childTransform.transform.forward * 1f, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(childTransform.transform.forward * force, ForceMode.Impulse);
         }
     }
     #endregion
