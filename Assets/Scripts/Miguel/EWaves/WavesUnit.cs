@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class WavesUnit : MonoBehaviour
 {
-    [SerializeField] private float FOVAngle;
+    [SerializeField] private float fOVAngle;
     [SerializeField] private float smoothDamp;
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private Vector3[] directionsToCheckWhenAvoidingObstacles;
@@ -20,6 +20,7 @@ public class WavesUnit : MonoBehaviour
     private float speed;
 
     public Transform myTransform { get; set; }
+    public float FOVAngle { get => fOVAngle; set => fOVAngle = value; }
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class WavesUnit : MonoBehaviour
 
     public void MoveUnit()
     {
+        
         FindNeighbours();
         CalculateSpeed();
 
@@ -46,6 +48,8 @@ public class WavesUnit : MonoBehaviour
         var aligementVector = CalculateAligementVector() * assignedFlock.aligementWeight;
         var boundsVector = CalculateBoundsVector() * assignedFlock.boundsWeight;
         var obstacleVector = CalculateObstacleVector() * assignedFlock.obstacleWeight;
+        Debug.Log("Cohesion: " + cohesionNeighbours.Count + " aligment:" + aligementNeighbours.Count + " Bounds:" + CalculateBoundsVector() + " obstacle:" + obstacleVector);
+
 
         var moveVector = cohesionVector + avoidanceVector + aligementVector + boundsVector + obstacleVector;
         moveVector = Vector3.SmoothDamp(myTransform.forward, moveVector, ref currentVelocity, smoothDamp);
@@ -144,8 +148,12 @@ public class WavesUnit : MonoBehaviour
     {
         var avoidanceVector = Vector3.zero;
         if (aligementNeighbours.Count == 0)
+        {
             return Vector3.zero;
+        }
+            
         int neighboursInFOV = 0;
+
         for (int i = 0; i < avoidanceNeighbours.Count; i++)
         {
             if (IsInFOV(avoidanceNeighbours[i].myTransform.position))

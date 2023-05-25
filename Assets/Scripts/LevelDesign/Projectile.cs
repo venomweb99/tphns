@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     #region VARIABLES
 
     [SerializeField] GameObject player;
-    [SerializeField] float speed = 3f;
+    //[SerializeField] float speed = 3f;
     private float height;
     private float gravity;
     [SerializeField] float launchangle;

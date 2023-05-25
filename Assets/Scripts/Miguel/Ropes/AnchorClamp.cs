@@ -10,7 +10,8 @@ public class AnchorClamp : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 tab = _tab.transform.localPosition;
+        Vector3 tab = _tab.transform.position;
+        if (tab == null) return;
         float xPosition = Mathf.Clamp(tab.x, _minX, _maxX);
         //Debug.Log("X pos -" + xPosition.ToString());
         this.transform.localPosition = new Vector3(xPosition, 0, 0);
