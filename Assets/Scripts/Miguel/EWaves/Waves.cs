@@ -9,7 +9,7 @@ public class Waves : MonoBehaviour
     [SerializeField] public WavesUnit waveUnitPrefab;
     [SerializeField] private int waveSize;
     [SerializeField] private Vector3 spawnBounds;
-
+    //Meny Unity:
     [Header("Speed Setup")]
     [Range(0, 10)]
     [SerializeField] private float _minSpeed;
@@ -88,7 +88,7 @@ public class Waves : MonoBehaviour
             randomVector = new Vector3(randomVector.x * spawnBounds.x, 1, randomVector.z * spawnBounds.z);
             var spawnPosition = transform.position + randomVector;
             var rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
-            allUnits[i] = Instantiate(waveUnitPrefab, spawnPosition, rotation);
+            allUnits[i] = Instantiate(waveUnitPrefab, spawnPosition, rotation, this.transform);
             allUnits[i].AssignWave(this);
             allUnits[i].InitializeSpeed(UnityEngine.Random.Range(minSpeed, maxSpeed));
         }
