@@ -161,6 +161,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Grounded");
                 isAirborne = false;
+
+            GetComponent<Hook>().StopGrapple();
         }
 
     }
@@ -172,6 +174,32 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.right * 10, Color.green);
         //raycast to transform down in blue
         Debug.DrawRay(transform.position-new Vector3(0,1.05f,0), -transform.up * 0.3f, Color.blue);
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementeY = endPoint.y - startPoint.y;
+        Vector3 displacementeXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velociryY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementeXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementeY - trajectoryHeight)/gravity));
+
+        return velocityXZ + velociryY;
+    }
+
+    public void JumpToPosition(Vector3 targetPosition, float trajetoryHeight)
+    {
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajetoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+    }
+
+    private Vector3 velocityToSet;
+
+    private void SetVelocity()
+    {
+        GetComponent<Rigidbody>().velocity = velocityToSet * 2.5f;
     }
     #endregion
 }

@@ -514,8 +514,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 520252352813853671, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1581554564}
+    - target: {fileID: 520252352813853671, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+      propertyPath: grapplingKey
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 520252352813853671, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+      propertyPath: overshootYAxis
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 520252352813853671, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+      propertyPath: whatIsGrappleable.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+--- !u!4 &1581554564 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 55989507575137308, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
+  m_PrefabInstance: {fileID: 820018249}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1596481515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 732538657385362341, guid: 49bc4ed03a4f7ca42b7efa54e74e0ef5, type: 3}
