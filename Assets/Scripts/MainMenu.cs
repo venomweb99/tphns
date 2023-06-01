@@ -7,6 +7,6 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("MiguelScene");
+        SceneManager.LoadScene("MapGenTest");
     }
 }
