@@ -78,9 +78,10 @@ public class EnemyMiguel : MonoBehaviour
         }
     }
     //we will draw the distance between the player and the enemy
+    /*
     void OnDrawGizmos()
     {
         GUI.color = Color.black;
         Handles.Label(transform.position - (transform.position - Player.transform.position) / 2, dista.ToString());
-    }
+    }*/
 }
