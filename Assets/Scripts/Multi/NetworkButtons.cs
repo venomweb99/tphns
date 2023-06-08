@@ -12,12 +12,16 @@ public class NetworkButtons : NetworkBehaviour
     public NetworkVariable<int> m_PlayersNum = new NetworkVariable<int>(
         0, NetworkVariableReadPermission.Everyone);
 
+    public NetworkVariable<int[]> seedNet = new NetworkVariable<int[]>(
+        new int[5], NetworkVariableReadPermission.Everyone);
+
+    public int[] seed;
+
     // Start is called before the first frame update
     void Start()
     {
         panel.SetActive(true);
         chat.SetActive(false);
-        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -32,20 +36,48 @@ public class NetworkButtons : NetworkBehaviour
     public void HostButton()
     {
         NetworkManager.Singleton.StartHost();
+        generateSeed();
         panel.SetActive(false);
         chat.SetActive(true);
         
     }
-    public void ServerButton()
-    {
-        NetworkManager.Singleton.StartServer();
-        panel.SetActive(false);
-        chat.SetActive(true);
-    }
+    
     public void ClientButton()
     {
        NetworkManager.Singleton.StartClient();
        panel.SetActive(false);
        chat.SetActive(true);
+       insertSeed(seedNet.Value);
+    }
+
+    public void generateSeed(){
+        seed = new int[5];
+        for (int i = 0; i < 4; i++)
+        {
+            seed[i] = Random.Range(0, 4);
+            for (int j = 0; j < i; j++)
+            {
+                if (seed[i] == seed[j])
+                {
+                    i--;
+                }
+
+            }
+        }
+        seedNet.Value = seed;
+        insertSeed(seedNet.Value);
+    }
+    public void insertSeed(int[] seedArray){
+        //find MapManager
+        GameObject mapManager = GameObject.Find("MapManager");
+        if(mapManager == null){
+            Debug.Log("MapManager not found");
+            return;
+        }else{
+            Debug.Log("MapManager found, inserting seed" + seedArray[0].ToString() + seedArray[1].ToString() + seedArray[2].ToString() + seedArray[3].ToString() + seedArray[4].ToString() + "");
+        }
+        //seedArray = new int[5]{1,2,3,4,5};
+        mapManager.GetComponent<ChunkGen>().setSeed(seedArray);
+        //mapManager.GetComponent<ChunkGen>().GenerateMap();
     }
 }
