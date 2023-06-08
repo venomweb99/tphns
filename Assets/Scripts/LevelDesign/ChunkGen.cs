@@ -22,6 +22,7 @@ public class ChunkGen : MonoBehaviour
     public float prefab5size;
     private float[] sizes;
     private float currentX = 0;
+    private bool active = false;
 
     void Start()
     {
@@ -36,45 +37,36 @@ public class ChunkGen : MonoBehaviour
             prefabs[i] = Instantiate(prefabs[i], new Vector3(0, 0, 0), Quaternion.identity);
             prefabs[i].SetActive(false);
         }
-        seed = new int[prefabs.Length];
-        GenerateMap();
+        //seed = new int[prefabs.Length];
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if the player is far from a chunk, deactivate it
-        for (int i = 0; i < prefabs.Length; i++)
-        {
-            if (prefabs[i].transform.position.z < Player.transform.position.z - RenderDistance)
+        if(active){
+            //if the player is far from a chunk, deactivate it
+            for (int i = 0; i < prefabs.Length; i++)
             {
-                prefabs[i].SetActive(false);
-            }
-        }
-        //if the player is close to a chunk, activate it
-        for (int i = 0; i < prefabs.Length; i++)
-        {
-            if (prefabs[i].transform.position.z > Player.transform.position.z - RenderDistance && prefabs[i].transform.position.z < Player.transform.position.z + RenderDistance)
-            {
-                prefabs[i].SetActive(true);
-            }
-        }
-        
-    
-    }
-
-    void GenerateMap(){
-        for (int i = 0; i < seed.Length; i++)
-        {
-            seed[i] = Random.Range(0, prefabs.Length);
-            for (int j = 0; j < i; j++)
-            {
-                if (seed[i] == seed[j])
+                if (prefabs[i].transform.position.z < Player.transform.position.z - RenderDistance)
                 {
-                    i--;
+                    prefabs[i].SetActive(false);
+                }
+            }
+            //if the player is close to a chunk, activate it
+            for (int i = 0; i < prefabs.Length; i++)
+            {
+                if (prefabs[i].transform.position.z > Player.transform.position.z - RenderDistance && prefabs[i].transform.position.z < Player.transform.position.z + RenderDistance)
+                {
+                    prefabs[i].SetActive(true);
                 }
             }
         }
+    
+    }
+
+    public void GenerateMap(){
+        
         //generate the chunks so they are palced one after the other in the x axis and activate them
         
         for (int i = 0; i < seed.Length; i++)
@@ -82,11 +74,14 @@ public class ChunkGen : MonoBehaviour
             prefabs[seed[i]].transform.position = new Vector3(0, 0, currentX);
             currentX += sizes[seed[i]];
             prefabs[seed[i]].SetActive(true);
+            Debug.Log(seed[i]);
         }
     }
 
-    void setSeed(int[] seed)
+    public void setSeed(int[] seed)
     {
         this.seed = seed;
+        active = true;
+        GenerateMap();
     }
 }
