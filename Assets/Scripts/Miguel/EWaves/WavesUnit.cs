@@ -57,7 +57,7 @@ public class WavesUnit : MonoBehaviour
         var aligementVector = CalculateAligementVector() * assignedFlock.aligementWeight;
         var boundsVector = CalculateBoundsVector() * assignedFlock.boundsWeight;
         var obstacleVector = CalculateObstacleVector() * assignedFlock.obstacleWeight;
-        Debug.Log("Cohesion: " + cohesionNeighbours.Count + " aligment:" + aligementNeighbours.Count + " Bounds:" + CalculateBoundsVector() + " obstacle:" + obstacleVector);
+        //Debug.Log("Cohesion: " + cohesionNeighbours.Count + " aligment:" + aligementNeighbours.Count + " Bounds:" + CalculateBoundsVector() + " obstacle:" + obstacleVector);
 
 
         var moveVector = cohesionVector + avoidanceVector + aligementVector + boundsVector + obstacleVector;

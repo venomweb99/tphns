@@ -12,12 +12,13 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] GameObject player;
     private Vector3 direction;
     private int state = 0;
+    private int waypointSize;
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-        
+        waypointSize = waypoints.Length;
     }   
 
     // Update is called once per frame
@@ -50,11 +51,25 @@ public class EnemyBehaviour : MonoBehaviour
         transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
         if ((transform.position - waypoints[waypointIndex].transform.position).sqrMagnitude<3.5)
         {
-            if (waypointIndex == 3) {
+            int RandomNumber = UnityEngine.Random.Range(-1, 2);
+            if(RandomNumber == 0)
+            {
+                RandomNumber = 1;
+            }
+            if(RandomNumber + waypointIndex < 0)
+            {
+                waypointIndex = waypointSize - 1;
+            }
+            else if(RandomNumber + waypointIndex > waypointSize-1)
+            {
                 waypointIndex = 0;
-            }else waypointIndex++;
+            }
+            else waypointIndex += RandomNumber;
+            if (waypointIndex >= waypointSize-1) {
+                waypointIndex = 0;
+            }else waypointIndex+= RandomNumber;
         }
-        Debug.Log("Waypoint: " + waypointIndex);
+        //Debug.Log("Waypoint: " + waypointIndex);
     }
 
     private void Chase()

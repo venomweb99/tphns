@@ -9,6 +9,7 @@ public class GetAttacked : MonoBehaviour
     private GameObject player;
     private Transform childTransform;
     public float force = 10f;
+    public float hp = 100f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,15 @@ public class GetAttacked : MonoBehaviour
     void Update()
     {
         attacksItself();
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+        //if below 0, destroy
+        if (transform.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
      
     }
 
@@ -29,8 +39,8 @@ public class GetAttacked : MonoBehaviour
     {    
         if (isAttacked)
         {
-            
-            GetComponent<Rigidbody>().AddForce(childTransform.transform.forward * force, ForceMode.Impulse);
+            hp -= 1f;
+            GetComponent<Rigidbody>().AddForce(childTransform.transform.up * force, ForceMode.Impulse);
         }
     }
     #endregion
