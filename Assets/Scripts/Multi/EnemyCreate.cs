@@ -11,6 +11,7 @@ public class EnemyCreate : NetworkBehaviour
     [SerializeField] private Transform prefab;
     private void Start()
     {
-        Instantiate(prefab);
+        Transform prefabInstance = Instantiate(prefab);
+        prefabInstance.GetComponent<NetworkObject>().Spawn(true);
     }
 }
