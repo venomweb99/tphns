@@ -1439,6 +1439,17 @@ MonoBehaviour:
   m_NumberOfPlayers: {fileID: 49692680}
   m_PlayersNum:
     m_InternalValue: 0
+  seedVal0:
+    m_InternalValue: 0
+  seedVal1:
+    m_InternalValue: 0
+  seedVal2:
+    m_InternalValue: 0
+  seedVal3:
+    m_InternalValue: 0
+  seedVal4:
+    m_InternalValue: 0
+  seed: 
 --- !u!1 &1097145388
 GameObject:
   m_ObjectHideFlags: 0

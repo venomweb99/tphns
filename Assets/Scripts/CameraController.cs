@@ -44,6 +44,16 @@ public class CameraController : MonoBehaviour
         playersPos /= players.Length;
         target.transform.position = playersPos;
         }
+        //if players are too far away from the target, if so make the camera go up until they fit in the camera view
+        foreach (GameObject player in players)
+        {
+            Vector3 playerToTarget = target.transform.position - player.transform.position;
+            if (playerToTarget.magnitude > cameraDistance)
+            {
+                //move the target up
+                target.transform.position += Vector3.up * cameraTargetAcceleration * Time.deltaTime;
+            }
+        }
     }
 
     void doCam(){

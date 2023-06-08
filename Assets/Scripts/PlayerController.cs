@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerController : MonoBehaviour
+
+public class PlayerController : NetworkBehaviour
 {
     #region Variables
     public float currentSpeed = 0.0f;
@@ -17,11 +19,15 @@ public class PlayerController : MonoBehaviour
     public float dashTimer = 0.0f;
     public float attackCD = 1.0f;
     public float attackTimer = 0.0f;
+    private NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
+    private NetworkVariable<Vector3> Rotation = new NetworkVariable<Vector3>();
 
-    
+    [SerializeField]
     private Vector3 lastdir = Vector3.zero;
     private float compensationAngle = 45.0f;
+    [SerializeField]
     private float AxisMx;
+    [SerializeField]
     private float AxisMy;
    
     #region Pooling
@@ -47,14 +53,27 @@ public class PlayerController : MonoBehaviour
             bullets.Add(obj);
         }
         activeBullets = new List<GameObject>();
+        transform.position += new Vector3(0, 6, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float dt = Time.deltaTime;
+        if(!IsOwner){
+            Debug.Log("not owner");
+            return;
+        }
         AxisMy = Input.GetAxis("Vertical");
         AxisMx = Input.GetAxis("Horizontal");
+        
+        
+        if(IsLocalPlayer){
+            updateOnServerRpc();}
+    }
+    #region METHODS
+
+    void updateThings(){
+        float dt = Time.deltaTime;
         
         //move the player accelerating it exponentially
         currentSpeed += acceleration * dt;
@@ -78,7 +97,6 @@ public class PlayerController : MonoBehaviour
 
         Shoot();
     }
-    #region METHODS
 
     void updateTimers(){
         dashTimer += Time.deltaTime;
@@ -202,5 +220,14 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody>().velocity = velocityToSet * 2.5f;
     }
     #endregion
+
+    
+
+    [ServerRpc(RequireOwnership = false)]
+    void updateOnServerRpc(){
+        updateThings();
+    }
+
+    
 }
    
