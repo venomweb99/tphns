@@ -26,6 +26,7 @@ public class ChunkGen : MonoBehaviour
 
     void Start()
     {
+        /*
         //insert all prefabs that are not null into an array
         prefabs = new GameObject[] { prefab1, prefab2, prefab3, prefab4, prefab5 };
         sizes = new float[] { prefab1size, prefab2size, prefab3size, prefab4size, prefab5size };
@@ -38,7 +39,7 @@ public class ChunkGen : MonoBehaviour
             prefabs[i].SetActive(false);
         }
         //seed = new int[prefabs.Length];
-        
+        */
     }
 
     // Update is called once per frame
@@ -68,14 +69,15 @@ public class ChunkGen : MonoBehaviour
     public void GenerateMap(){
         
         //generate the chunks so they are palced one after the other in the x axis and activate them
-        
+        /*
         for (int i = 0; i < seed.Length; i++)
         {
             prefabs[seed[i]].transform.position = new Vector3(0, 0, currentX);
             currentX += sizes[seed[i]];
             prefabs[seed[i]].SetActive(true);
             Debug.Log(seed[i]);
-        }
+        }*/
+        Instantiate(prefab5, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     public void setSeed(int[] seed)
