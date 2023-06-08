@@ -12,8 +12,20 @@ public class NetworkButtons : NetworkBehaviour
     public NetworkVariable<int> m_PlayersNum = new NetworkVariable<int>(
         0, NetworkVariableReadPermission.Everyone);
 
-    public NetworkVariable<int[]> seedNet = new NetworkVariable<int[]>(
-        new int[5], NetworkVariableReadPermission.Everyone);
+    public NetworkVariable<int> seedVal0 = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone);
+
+    public NetworkVariable<int> seedVal1 = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone);
+
+    public NetworkVariable<int> seedVal2 = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone);
+
+    public NetworkVariable<int> seedVal3 = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone);
+
+    public NetworkVariable<int> seedVal4 = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone);
 
     public int[] seed;
 
@@ -47,7 +59,7 @@ public class NetworkButtons : NetworkBehaviour
        NetworkManager.Singleton.StartClient();
        panel.SetActive(false);
        chat.SetActive(true);
-       insertSeed(seedNet.Value);
+       insertSeed(getSeedFromNetList());
     }
 
     public void generateSeed(){
@@ -64,20 +76,33 @@ public class NetworkButtons : NetworkBehaviour
 
             }
         }
-        seedNet.Value = seed;
-        insertSeed(seedNet.Value);
+        //add the seed values to the char array seedNet
+        addSeedToNetList(seed);
+
+        insertSeed(getSeedFromNetList());
     }
     public void insertSeed(int[] seedArray){
-        //find MapManager
         GameObject mapManager = GameObject.Find("MapManager");
-        if(mapManager == null){
-            Debug.Log("MapManager not found");
-            return;
-        }else{
-            Debug.Log("MapManager found, inserting seed" + seedArray[0].ToString() + seedArray[1].ToString() + seedArray[2].ToString() + seedArray[3].ToString() + seedArray[4].ToString() + "");
-        }
-        //seedArray = new int[5]{1,2,3,4,5};
         mapManager.GetComponent<ChunkGen>().setSeed(seedArray);
-        //mapManager.GetComponent<ChunkGen>().GenerateMap();
+    }
+
+    public void addSeedToNetList(int[] seedArray){
+        //add the seed values to the char array seedNet
+        seedVal0.Value = seedArray[0];
+        seedVal1.Value = seedArray[1];
+        seedVal2.Value = seedArray[2];
+        seedVal3.Value = seedArray[3];
+        seedVal4.Value = seedArray[4];  
+    }
+    public int[] getSeedFromNetList(){
+        //read the seed from the string seedNet
+        int[] seed = new int[5];
+        seed[0] = seedVal0.Value;
+        seed[1] = seedVal1.Value;
+        seed[2] = seedVal2.Value;
+        seed[3] = seedVal3.Value;
+        seed[4] = seedVal4.Value;
+        
+        return seed;
     }
 }
