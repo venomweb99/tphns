@@ -27,7 +27,7 @@ public class NetworkButtons : NetworkBehaviour
     public NetworkVariable<int> seedVal4 = new NetworkVariable<int>(
         0, NetworkVariableReadPermission.Everyone);
 
-    public int[] seed;
+    private int[] seed;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +40,7 @@ public class NetworkButtons : NetworkBehaviour
     void Update()
     {
         m_NumberOfPlayers.text = "Players: " + m_PlayersNum.Value.ToString();
-        if(!IsServer) return;
+        if(!IsServer || !IsHost) return;
         m_PlayersNum.Value = NetworkManager.Singleton.ConnectedClients.Count;
         
     }
@@ -79,7 +79,7 @@ public class NetworkButtons : NetworkBehaviour
         //add the seed values to the char array seedNet
         addSeedToNetList(seed);
 
-        insertSeed(getSeedFromNetList());
+        insertSeed(seed);
     }
     public void insertSeed(int[] seedArray){
         GameObject mapManager = GameObject.Find("MapManager");
