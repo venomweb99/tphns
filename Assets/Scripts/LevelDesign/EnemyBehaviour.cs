@@ -51,23 +51,8 @@ public class EnemyBehaviour : MonoBehaviour
         transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
         if ((transform.position - waypoints[waypointIndex].transform.position).sqrMagnitude<3.5)
         {
-            int RandomNumber = UnityEngine.Random.Range(-1, 2);
-            if(RandomNumber == 0)
-            {
-                RandomNumber = 1;
-            }
-            if(RandomNumber + waypointIndex < 0)
-            {
-                waypointIndex = waypointSize - 1;
-            }
-            else if(RandomNumber + waypointIndex > waypointSize-1)
-            {
-                waypointIndex = 0;
-            }
-            else waypointIndex += RandomNumber;
-            if (waypointIndex >= waypointSize-1) {
-                waypointIndex = 0;
-            }else waypointIndex+= RandomNumber;
+            int RandomNumber = UnityEngine.Random.Range(0, waypointSize-1);
+            waypointIndex = RandomNumber;
         }
         //Debug.Log("Waypoint: " + waypointIndex);
     }
