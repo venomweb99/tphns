@@ -84,4 +84,9 @@ public class ChunkGen : MonoBehaviour
             prefabs[seed[i]].SetActive(true);
         }
     }
+
+    void setSeed(int[] seed)
+    {
+        this.seed = seed;
+    }
 }

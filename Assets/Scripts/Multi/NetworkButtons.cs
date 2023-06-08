@@ -12,12 +12,14 @@ public class NetworkButtons : NetworkBehaviour
     public NetworkVariable<int> m_PlayersNum = new NetworkVariable<int>(
         0, NetworkVariableReadPermission.Everyone);
 
+    public NetworkVariable<int[]> seed = new NetworkVariable<int[]>(
+        new int[5], NetworkVariableReadPermission.Everyone);
+
     // Start is called before the first frame update
     void Start()
     {
         panel.SetActive(true);
         chat.SetActive(false);
-        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -47,5 +49,20 @@ public class NetworkButtons : NetworkBehaviour
        NetworkManager.Singleton.StartClient();
        panel.SetActive(false);
        chat.SetActive(true);
+       insertSeed(seed.Value);
+    }
+
+    public void generateSeed(){
+        if(!IsServer) return;
+        int[] seedArray = new int[5];
+        for(int i = 0; i < 5; i++){
+            seedArray[i] = Random.Range(0, 4);
+        }
+        seed.Value = seedArray;
+    }
+    public void insertSeed(int[] seedArray){
+        //find MapManager
+        GameObject mapManager = GameObject.Find("MapManager");
+        mapManager.GetComponent<ChunkGen>().seed = seedArray;
     }
 }
