@@ -8,12 +8,12 @@ using System;
 public class EnemyCreate : NetworkBehaviour
 {
     public GameObject PrefabToSpawn;
-    public bool DestroyWithSpawner;
+    public bool SpawnPrefabAutomatically;
+
     private GameObject m_PrefabInstance;
     private NetworkObject m_SpawnedNetworkObject;
 
 
-    // Start is called before the first frame update
     private void Start()
     {
         // Instantiate our instance when we start (for both clients and server)
@@ -40,6 +40,24 @@ public class EnemyCreate : NetworkBehaviour
         SpawnInstance();
         yield break;
     }
+
+    /// <summary>
+    /// Invoked only on clients and not server or host
+    /// INetworkPrefabInstanceHandler.Instantiate implementation
+    /// Called when Netcode for GameObjects need an instance to be spawned
+    /// </summary>
+    public NetworkObject Instantiate(ulong ownerClientId, Vector3 position, Quaternion rotation)
+    {
+        m_PrefabInstance.SetActive(true);
+        m_PrefabInstance.transform.position = transform.position;
+        m_PrefabInstance.transform.rotation = transform.rotation;
+        return m_SpawnedNetworkObject;
+    }
+
+    /// <summary>
+    /// Client and Server side
+    /// INetworkPrefabInstanceHandler.Destroy implementation
+    /// </summary>
     public void Destroy(NetworkObject networkObject)
     {
         m_PrefabInstance.SetActive(false);
@@ -59,40 +77,42 @@ public class EnemyCreate : NetworkBehaviour
             StartCoroutine(DespawnTimer());
         }
     }
-    public NetworkObject Instantiate(ulong ownerClientId, Vector3 position, Quaternion rotation)
-    {
-        m_PrefabInstance.SetActive(true);
-        m_PrefabInstance.transform.position = transform.position;
-        m_PrefabInstance.transform.rotation = transform.rotation;
-        return m_SpawnedNetworkObject;
-    }
 
-    public void OnNetworkSpawn()
+    public override void OnNetworkSpawn()
     {
-        // Only the server spawns, clients will disable this component on their side
-        enabled = IsServer;
-        if (!enabled || PrefabToSpawn == null)
+        // We register our network Prefab and this NetworkBehaviour that implements the
+        // INetworkPrefabInstanceHandler interface with the Prefab handler
+        NetworkManager.PrefabHandler.AddHandler(PrefabToSpawn, (INetworkPrefabInstanceHandler)this);
+
+        if (!IsServer || !SpawnPrefabAutomatically)
         {
             return;
         }
-        // Instantiate the GameObject Instance
-        m_PrefabInstance = Instantiate(PrefabToSpawn);
 
-        // Optional, this example applies the spawner's position and rotation to the new instance
-        m_PrefabInstance.transform.position = transform.position;
-        m_PrefabInstance.transform.rotation = transform.rotation;
-
-        // Get the instance's NetworkObject and Spawn
-        m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
-        m_SpawnedNetworkObject.Spawn();
+        if (SpawnPrefabAutomatically)
+        {
+            SpawnInstance();
+        }
     }
 
-    public void OnNetworkDespawn()
+    public override void OnNetworkDespawn()
     {
-        if (IsServer && DestroyWithSpawner && m_SpawnedNetworkObject != null && m_SpawnedNetworkObject.IsSpawned)
+        if (m_SpawnedNetworkObject != null && m_SpawnedNetworkObject.IsSpawned)
         {
             m_SpawnedNetworkObject.Despawn();
         }
         base.OnNetworkDespawn();
+    }
+
+    public override void OnDestroy()
+    {
+        // This example destroys the
+        if (m_PrefabInstance != null)
+        {
+            // Always deregister the prefab
+            NetworkManager.Singleton.PrefabHandler.RemoveHandler(PrefabToSpawn);
+            Destroy(m_PrefabInstance);
+        }
+        base.OnDestroy();
     }
 }

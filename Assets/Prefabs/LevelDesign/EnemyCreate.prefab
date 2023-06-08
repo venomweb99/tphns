@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabToSpawn: {fileID: 732538657385362341, guid: 49bc4ed03a4f7ca42b7efa54e74e0ef5, type: 3}
-  DestroyWithSpawner: 1
+  SpawnPrefabAutomatically: 1
 --- !u!114 &3701161924771231675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
+  AlwaysReplicateAsRoot: 1
+  DontDestroyWithOwner: 1
   AutoObjectParentSync: 1
