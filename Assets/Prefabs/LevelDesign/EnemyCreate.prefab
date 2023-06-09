@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacebf5dd0062b7409b1434d40e74235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 732538657385362341, guid: 49bc4ed03a4f7ca42b7efa54e74e0ef5, type: 3}
   prefab: {fileID: 732538657385362398, guid: 49bc4ed03a4f7ca42b7efa54e74e0ef5, type: 3}
 --- !u!114 &3701161924771231675
 MonoBehaviour:
