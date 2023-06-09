@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using TMPro;
-using Unity.Netcode;
-using System;
-using Unity.VisualScripting;
-
 public class GetAttacked : MonoBehaviour
 {
     public bool isAttacked = false;
