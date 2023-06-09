@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
+using TMPro;
+using Unity.Netcode;
+using System;
+using Unity.VisualScripting;
 
 public class GetAttacked : MonoBehaviour
 {
     public bool isAttacked = false;
-    [SerializeField]
-    private GameObject player;
+    [SerializeField] private GameObject player;
     private Transform childTransform;
     private float force = 0.1f;
     public float hp = 100f;
