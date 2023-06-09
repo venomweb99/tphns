@@ -136,8 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttacked: 0
   player: {fileID: 55989508053622214, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
-  force: 0.6
   hp: 100
+  enemy: {fileID: 0}
+  prefab: {fileID: 0}
 --- !u!114 &732538657385362396
 MonoBehaviour:
   m_ObjectHideFlags: 0
