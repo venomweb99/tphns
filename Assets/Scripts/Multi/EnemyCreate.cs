@@ -39,7 +39,6 @@ public class EnemyCreate : NetworkBehaviour
             prefabInstance = Instantiate(prefab);
             prefabInstance.GetComponent<NetworkObject>().Spawn(true);
     }
-   
     private void Update()
     {
         //pillar la salud del enemigo

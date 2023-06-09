@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 732538657385362399}
   - component: {fileID: 732538657385362396}
   - component: {fileID: 5696984704364046430}
-  - component: {fileID: 3327146035844600534}
+  - component: {fileID: -9217857312327099439}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -137,8 +137,6 @@ MonoBehaviour:
   isAttacked: 0
   player: {fileID: 55989508053622214, guid: 2ea6cd38547934844af7aa2dea840797, type: 3}
   hp: 100
-  enemy: {fileID: 0}
-  prefab: {fileID: 0}
 --- !u!114 &732538657385362396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +184,7 @@ MonoBehaviour:
   _aligementWeight: 0
   _boundsWeight: 1
   _obstacleWeight: 3.6
---- !u!114 &3327146035844600534
+--- !u!114 &-9217857312327099439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

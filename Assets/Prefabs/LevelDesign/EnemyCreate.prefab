@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3701161924771231677}
   - component: {fileID: 3701161924771231678}
   - component: {fileID: 3701161924771231674}
-  - component: {fileID: 3701161924771231675}
+  - component: {fileID: 207639754057874762}
   m_Layer: 0
   m_Name: EnemyCreate
   m_TagString: Untagged
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 732538657385362341, guid: 49bc4ed03a4f7ca42b7efa54e74e0ef5, type: 3}
   prefab: {fileID: 732538657385362398, guid: 49bc4ed03a4f7ca42b7efa54e74e0ef5, type: 3}
---- !u!114 &3701161924771231675
+--- !u!114 &207639754057874762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,5 +113,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 951099334
   AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 1
+  DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
