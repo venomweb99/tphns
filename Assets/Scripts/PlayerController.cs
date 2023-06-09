@@ -61,7 +61,7 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(!IsOwner){
             return;
@@ -109,13 +109,13 @@ public class PlayerController : NetworkBehaviour
     #region METHODS
 
     void updateThings(float amx, float amy, bool isJumping, bool isDashing, bool isAttack){
-        float dt = Time.deltaTime;
+        float dt = Time.fixedDeltaTime;
         //raycast a green beam upside
         Debug.DrawRay(transform.position, Vector3.up * 10, Color.green);
         
         //move the player accelerating it exponentially
         currentSpeed += acceleration * dt;
-        currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+        currentSpeed = maxSpeed;
         transform.Translate(amx * currentSpeed * dt, 0.0f, amy * currentSpeed * dt);
         
         
