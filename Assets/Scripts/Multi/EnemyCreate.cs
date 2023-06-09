@@ -23,9 +23,13 @@ public class EnemyCreate : NetworkBehaviour
         //destruir el prefab
         //y updatevo id st
 
-        if(enemy.Health<=0)
+        float targethp = enemy.GetComponent<GetAttacked>().hp;
+        Debug.Log("HP: " + targethp);
+    
+        if(targethp<=0)
         {
             prefabInstance.GetComponent<NetworkObject>().Despawn(true);
+            Destroy(prefabInstance.gameObject);
         }
     }
 }

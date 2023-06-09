@@ -8,26 +8,24 @@ using Unity.Netcode;
 public class PlayerController : NetworkBehaviour
 {
     #region Variables
-    public float currentSpeed = 0.0f;
-    public float maxSpeed = 10.0f;
-    public float acceleration = 1.0f;
-    public float dashForce = 20.0f;
-    public float pushForce = 20.0f;
-    public float pushUpForce = 20.0f;
+    [SerializeField]
+    private float currentSpeed = 0.0f;
+    private float maxSpeed = 10.0f;
+    private float acceleration = 1.0f;
+    private float dashForce = 20.0f;
+    private float pushForce = 20.0f;
+    private float pushUpForce = 20.0f;
     public float jumpForce = 10.0f;
-    public float dashCD = 3.0f;
-    public float dashTimer = 0.0f;
+    private float dashCD = 3.0f;
+    private float dashTimer = 0.0f;
     public float attackCD = 1.0f;
     public float attackTimer = 0.0f;
     private NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
     private NetworkVariable<Vector3> Rotation = new NetworkVariable<Vector3>();
 
-    [SerializeField]
     private Vector3 lastdir = Vector3.zero;
     private float compensationAngle = 45.0f;
-    [SerializeField]
     private float AxisMx;
-    [SerializeField]
     private float AxisMy;
    
     #region Pooling
@@ -40,11 +38,16 @@ public class PlayerController : NetworkBehaviour
     public GameObject attackHitbox;
     public bool isAttacking = false;
     public bool isAirborne = false;
+    private bool isJumping = false;
+    private bool isDashing = false;
+    private bool isAttack = false;
+    private bool once = false;
     #endregion
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        /*
         bullets = new List<GameObject>();
         for(int i = 0;i< 20; i++)
         {
@@ -52,7 +55,8 @@ public class PlayerController : NetworkBehaviour
             obj.SetActive(false);
             bullets.Add(obj);
         }
-        activeBullets = new List<GameObject>();
+        activeBullets = new List<GameObject>();*/
+        
         transform.position += new Vector3(0, 6, 0);
     }
 
@@ -60,42 +64,77 @@ public class PlayerController : NetworkBehaviour
     void Update()
     {
         if(!IsOwner){
-            Debug.Log("not owner");
             return;
         }
         AxisMy = Input.GetAxis("Vertical");
         AxisMx = Input.GetAxis("Horizontal");
+        if(Input.GetButtonDown("Dash")){
+            isDashing = true;
+        }else{
+            isDashing = false;
+        }
+        if(Input.GetButtonDown("Jump")){
+            isJumping = true;
+        }else{
+            isJumping = false;
+        }
+        //check if BasicAttack is being pressed
+        if (Input.GetButtonDown("BasicAttack"))
+        {
+            isAttack = true;
+        }
+        //Once you realease the button, cannot attack anymore unitl being pressed again
+        if (Input.GetButtonUp("BasicAttack"))
+        {
+            isAttack = false;
+        }
         
         
-        if(IsLocalPlayer){
-            updateOnServerRpc();}
+        if(IsHost){
+            updateOnServerRpc(AxisMx, AxisMy, isJumping, isDashing, isAttack);
+        }else{
+            Debug.Log("client");
+            if(once == false){
+                once = true;
+                int mult = 4;
+                acceleration *= mult;
+                maxSpeed *= mult;
+            }
+            
+            updateOnServerRpc(AxisMx, AxisMy, isJumping, isDashing, isAttack);
+            
+        
+        }
     }
     #region METHODS
 
-    void updateThings(){
+    void updateThings(float amx, float amy, bool isJumping, bool isDashing, bool isAttack){
         float dt = Time.deltaTime;
+        //raycast a green beam upside
+        Debug.DrawRay(transform.position, Vector3.up * 10, Color.green);
         
         //move the player accelerating it exponentially
         currentSpeed += acceleration * dt;
         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-        transform.Translate(AxisMx * currentSpeed * dt, 0.0f, AxisMy * currentSpeed * dt);
+        transform.Translate(amx * currentSpeed * dt, 0.0f, amy * currentSpeed * dt);
         
         
 
         //on jump input jump
-        if (Input.GetButtonDown("Jump") && !isAirborne)
+        if (isJumping && !isAirborne)
         {
             isAirborne = true;
             GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+            isJumping = false;
         }
 
         updateTimers();
         groundCheck();
         if(dashTimer > dashCD) dash();
         if(attackTimer > attackCD) basicAttack();
-        debugTests();
+        //debugTests();
 
-        Shoot();
+        //Shoot();
     }
 
     void updateTimers(){
@@ -126,7 +165,7 @@ public class PlayerController : NetworkBehaviour
         if(AxisMy < -margin) isFwd = -1;
 
 
-        if (Input.GetButtonDown("Dash"))
+        if (isDashing)
         {
             if(AxisMx > margin || AxisMx < -margin || AxisMy > margin || AxisMy < -margin){
                 GetComponent<Rigidbody>().AddForce(transform.forward * isFwd * dashForce, ForceMode.Impulse);
@@ -137,6 +176,7 @@ public class PlayerController : NetworkBehaviour
             }
             
             dashTimer = 0;
+            isDashing = false;
         }
         
     }
@@ -159,12 +199,10 @@ public class PlayerController : NetworkBehaviour
     void basicAttack()
     {
         //check if BasicAttack is being pressed
-        if (Input.GetButtonDown("BasicAttack"))
+        if (isAttack)
         {
             isAttacking = true;
-        }
-        //Once you realease the button, cannot attack anymore unitl being pressed again
-        if (Input.GetButtonUp("BasicAttack"))
+        }else
         {
             isAttacking = false;
         }
@@ -221,11 +259,17 @@ public class PlayerController : NetworkBehaviour
     }
     #endregion
 
-    
+    [ClientRpc]
+    void updateOnClientRpc(float amx, float amy, bool isJumping, bool isDashing, bool isAttack){
+        updateOnServerRpc(amx, amy, isJumping, isDashing, isAttack);
+        Debug.Log("ClientRpc updated");
+    }
 
     [ServerRpc(RequireOwnership = false)]
-    void updateOnServerRpc(){
-        updateThings();
+    void updateOnServerRpc(float amx, float amy, bool isJumping, bool isDashing, bool isAttack){
+        
+        updateThings(amx, amy, isJumping, isDashing, isAttack);
+        Debug.Log("ServerRpc updated");
     }
 
     

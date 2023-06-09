@@ -248,19 +248,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSpeed: 0
-  maxSpeed: 10
-  acceleration: 1
-  dashForce: 20
-  pushForce: 20
-  pushUpForce: 20
   jumpForce: 15
-  dashCD: 3
-  dashTimer: 0
   attackCD: 1
   attackTimer: 0
-  lastdir: {x: 0, y: 0, z: 0}
-  AxisMx: 0
-  AxisMy: 0
   bullets: []
   bullet: {fileID: 4037576893478142236, guid: 4f62e0898e3145a4ba95033fe0c4446a, type: 3}
   m_instancePoint: {fileID: 55989508053622234}
@@ -395,7 +385,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55989508720761054}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -493,7 +483,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918769257856867156}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -708,7 +698,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8851053572092216793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

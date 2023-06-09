@@ -8,7 +8,7 @@ public class GetAttacked : MonoBehaviour
     [SerializeField]
     private GameObject player;
     private Transform childTransform;
-    public float force = 10f;
+    private float force = 0.1f;
     public float hp = 100f;
     // Start is called before the first frame update
     void Start()
@@ -20,12 +20,12 @@ public class GetAttacked : MonoBehaviour
     void Update()
     {
         attacksItself();
-        if (hp <= 0)
-        {
-            Destroy(gameObject);
-        }
         //if below 0, destroy
         if (transform.position.y < -10)
+        {
+            hp = 0;
+        }
+        if (hp <= 0)
         {
             Destroy(gameObject);
         }
